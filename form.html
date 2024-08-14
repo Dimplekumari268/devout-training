@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+<body>
+    <form action="" method="post" onsubmit="event.preventDefault(); submitHandle()">
+        <input type="text" placeholder="name" name="name" id="name">
+        <span class="text-danger" id="name_error"></span>
+        <input type="text" placeholder="Email" name="email" id="email">
+        <span class="text-danger" id="email_error"></span>
+        <input type="text" placeholder="phone" name="phone" id="phone">
+        <span class="text-danger" id="phone_error"></span>
+        <button type="submit">Save</button>
+    </form>
+    
+    <script>
+        function submitHandle(){
+            let isValid = validateForm();
+            if(isValid){
+                alert('Form is ready to be submit')
+            }else{
+                // alert('PLease check errors')
+                //Ajax code here to submit form
+            }
+        }
+
+
+         function validateForm(){
+            document.getElementById('name_error').innerHTML= '';
+            document.getElementById('email_error').innerHTML= '';
+            document.getElementById('phone_error').innerHTML= '';
+            let name = document.getElementById('name').value;
+            let email = document.getElementById('email').value;
+            let phone = document.getElementById('phone').value;
+            
+            let isError = false;
+            let errors = {};
+            // if(name == ''){
+            if(name.trim().length == 0){
+                // document.getElementById('name_error').innerHTML= 'Please enter your name';
+                errors['name_error'] = 'Please enter your name';
+            } 
+            if(email.trim().length == 0){
+                // document.getElementById('name_error').innerHTML= 'Please enter your name';
+                errors['email_error'] = 'Please enter your email';
+            } 
+            if(phone.trim().length == 0){
+                // document.getElementById('name_error').innerHTML= 'Please enter your name';
+                errors['phone_error'] = 'Please enter your phone no';
+            } 
+
+            showValidationMessages(errors)
+
+            if(Object.keys(errors).length > 0){
+                return false;
+            }else{
+                return true;
+            }
+
+            console.log(Object.keys(errors).length);
+         }
+
+
+         function showValidationMessages(errors){
+            for (const key in errors) {
+                document.getElementById(key).innerHTML = errors[key];
+            }
+         }
+    </script>
+</body>
+</html>
